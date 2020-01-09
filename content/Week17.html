@@ -1,37 +1,170 @@
-<h1>About</h1>
-<p>此內容管理系統以 <a href="https://github.com/mdecourse/cmsimde">https://github.com/mdecourse/cmsimde</a> 作為 submodule 運作, 可以選定對應的版本運作, cmsimde 可以持續改版, 不會影響之前設為 submodule, 使用舊版 cmsimde 模組的內容管理相關運作.</p>
-<h4>利用 cmsimde 建立靜態網誌方法:</h4>
-<p>1. 在 github 建立倉儲, git clone 到近端</p>
-<p>2. 參考 <a href="https://github.com/mdecourse/newcms">https://github.com/mdecourse/newcms</a>, 加入除了 cmsimde 目錄外的所有內容</p>
-<p>以 git submodule add <a href="https://github.com/mdecourse/cmsimde">https://github.com/mdecourse/cmsimde</a> cmsimde</p>
-<p>建立 cmsimde 目錄, 並從 github 取下子模組內容.</p>
-<p>3.在近端維護時, 更換目錄到倉儲中的 cmsimde, 以 python wsgi.py 啟動近端網際伺服器.</p>
-<p>動態內容編輯完成後, 以 generate_pages 轉為靜態內容, 以 git add commit 及 push 將內容推到遠端.</p>
-<p>4. 之後若要以 git clone 取下包含 submodule 的所有內容, 執行:</p>
-<p>git clone --recurse-submodules <a href="https://github.com/mdecourse/newcms.git">https://github.com/mdecourse/newcms.git</a></p>
-<h1>Develop</h1>
-<p><a href="https://github.com/mdecourse/cmsimde">https://github.com/mdecourse/cmsimde</a> 的開發, 可以在一個目錄中放入 cmsimde, 然後將 up_dir 中的內容放到與 cmsimde 目錄同位階的地方, 使用 command 進入 cmsimde 目錄, 執行 python wsgi.py, 就可以啟動, 以瀏覽器 https://localhost:9443 就可以連接, 以 admin 作為管理者密碼, 就可以登入維護內容.</p>
-<p>cmsimde 的開發採用 Leo Editor, 開啟 cmsimde 目錄中的 cmsimde.leo 就可以進行程式修改, 結束後, 若要保留網際內容, 只要將 cmsimde 外部的內容倒回 up_dir 目錄中即可後續對 cmsimde 遠端倉儲進行改版.</p>
-<p>init.py 位於  up_dir 目錄, 可以設定 site_title 與 uwsgi 等變數.</p>
-<h1>每周進度</h1>
-<h2>Week17</h2>
+<!DOCTYPE html><html>
+        <head>
+        <title>CMSiMDE</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700,900" rel="stylesheet">
+        <link rel="stylesheet" href="./../cmsimde/static/chimper/fonts/icomoon/style.css">
+        <link rel="stylesheet" href="./../cmsimde/static/chimper/css/bootstrap.min.css">
+        <link rel="stylesheet" href="./../cmsimde/static/chimper/css/magnific-popup.css">
+        <link rel="stylesheet" href="./../cmsimde/static/chimper/css/jquery-ui.css">
+        <link rel="stylesheet" href="./../cmsimde/static/chimper/css/owl.carousel.min.css">
+        <link rel="stylesheet" href="./../cmsimde/static/chimper/css/owl.theme.default.min.css">
+        <link rel="stylesheet" href="./../cmsimde/static/chimper/css/bootstrap-datepicker.css">
+        <link rel="stylesheet" href="./../cmsimde/static/chimper/fonts/flaticon/font/flaticon.css">
+        <link rel="stylesheet" href="./../cmsimde/static/chimper/css/aos.css">
+        <link rel="stylesheet" href="./../cmsimde/static/chimper/css/style.css">
+        <link rel="shortcut icon" href="./../cmsimde/static/favicons.png">
+        
+        <style type='text/css'>
+            .site-section {
+            background-color: #FFFF;
+            padding: 40px 40px;
+            }
+            body > div > div.dropdown.open {
+                display: block;
+            }
+        </style>
+    
+        <!-- <script src="./../cmsimde/static/jquery.js"></script> -->
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+        <script src="../cmsimde/static/chimper/js/jquery-3.3.1.min.js"></script>
+        <link rel="stylesheet" href="./../cmsimde/static/tipuesearch/css/normalize.min.css">
+        <script src="./../cmsimde/static/tipuesearch/tipuesearch_set.js"></script>
+        <script src="tipuesearch_content.js"></script>
+        <link rel="stylesheet" href="./../cmsimde/static/tipuesearch/css/tipuesearch.css">
+        <script src="./../cmsimde/static/tipuesearch/tipuesearch.js"></script>
+        <script>
+            /* original tipuesearch
+            $(document).ready(function() {
+                 $('#tipue_search_input').tipuesearch();
+            });
+            */
+            // customed doSearch
+            function doSearch() {
+                $('#tipue_search_input').tipuesearch({
+                    newWindow: true, 
+                    minimumLength: 2,
+                    wholeWords: false, // for search 中文
+                });
+            }
+            $(document).ready(doSearch);
+        </script>
+        
+<script type="text/javascript" src="./../cmsimde/static/syntaxhighlighter/shCore.js"></script>
+<script type="text/javascript" src="./../cmsimde/static/syntaxhighlighter/shBrushJScript.js"></script>
+<script type="text/javascript" src="./../cmsimde/static/syntaxhighlighter/shBrushJava.js"></script>
+<script type="text/javascript" src="./../cmsimde/static/syntaxhighlighter/shBrushPython.js"></script>
+<script type="text/javascript" src="./../cmsimde/static/syntaxhighlighter/shBrushSql.js"></script>
+<script type="text/javascript" src="./../cmsimde/static/syntaxhighlighter/shBrushXml.js"></script>
+<script type="text/javascript" src="./../cmsimde/static/syntaxhighlighter/shBrushPhp.js"></script>
+<script type="text/javascript" src="./../cmsimde/static/syntaxhighlighter/shBrushLua.js"></script>
+<script type="text/javascript" src="./../cmsimde/static/syntaxhighlighter/shBrushCpp.js"></script>
+<script type="text/javascript" src="./../cmsimde/static/syntaxhighlighter/shBrushCss.js"></script>
+<script type="text/javascript" src="./../cmsimde/static/syntaxhighlighter/shBrushCSharp.js"></script>
+<link type="text/css" rel="stylesheet" href="./../cmsimde/static/syntaxhighlighter/css/shCoreDefault.css"/>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+
+<!-- for LaTeX equations 暫時不用
+<script src="https://scrum-3.github.io/web/math/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript"></script>
+<script type="text/javascript">
+init_mathjax = function() {
+    if (window.MathJax) {
+        // MathJax loaded
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+                displayMath: [ ['$$','$$'], ["\\[","\\]"] ]
+            },
+            displayAlign: 'left', // Change this to 'center' to center equations.
+            "HTML-CSS": {
+                styles: {'.MathJax_Display': {"margin": 0}}
+            }
+        });
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+    }
+}
+init_mathjax();
+</script>
+-->
+<!-- 暫時不用
+<script src="./../cmsimde/static/fengari-web.js"></script>
+<script type="text/javascript" src="./../cmsimde/static/Cango-13v08-min.js"></script>
+<script type="text/javascript" src="./../cmsimde/static/CangoAxes-4v01-min.js"></script>
+<script type="text/javascript" src="./../cmsimde/static/gearUtils-05.js"></script>
+-->
+<!-- for Brython 暫時不用
+<script src="https://scrum-3.github.io/web/brython/brython.js"></script>
+<script src="https://scrum-3.github.io/web/brython/brython_stdlib.js"></script>
+-->
+
+</head>
+<body>
+<div class='container'><nav>
+        
+    <div class="site-wrap">
+
+    <div class="site-mobile-menu">
+      <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close mt-3">
+          <span class="icon-close2 js-menu-toggle"></span>
+        </div>
+      </div>
+      <div class="site-mobile-menu-body"></div>
+    </div>
+    
+            <header class="site-navbar py-4 bg-white" role="banner">
+              <div class="container-fluid">
+                <div class="row align-items-center">
+                <h1>40723154 cad2019</h1>
+                <div class="pl-4">
+                    <form>
+                    <input type="text" placeholder="Search" name="q" id="tipue_search_input" pattern=".{2,}" title="At least 2 characters" required>
+                    </form>
+                </div>
+                  <!-- <div class="col-11 col-xl-2">
+                    <h1 class="mb-0 site-logo"><a href="index.html" class="text-black h2 mb-0">40723154 cad2019</a></h1> 
+                  </div>
+                  -->
+                  <div class="col-12 col-md-10 d-none d-xl-block">
+                    <nav class="site-navigation position-relative text-right" role="navigation">
+    <ul class='site-menu js-clone-nav mr-auto d-none d-lg-block'>
+                        <li class="active has-children"><a href="index.html">Home</a>
+                        <ul class="dropdown">
+                            <li><a href="sitemap.html">Site Map</a></li>
+                            <li><a href="./../reveal/index.html">reveal</a></li>
+                            <li><a href="./../blog/index.html">blog</a></li>
+                        </ul>
+                      </li>
+                     <li><a href='About.html'>About</a><li><a href='Develop.html'>Develop</a><li class='has-children'><a href='每周進度.html'>每周進度</a><ul class='dropdown'><li><a href='Week17.html'>Week17</a></li>
+                      </ul>
+                </nav>
+              </div>
+              <div class="d-inline-block d-xl-none ml-md-0 mr-auto py-3" style="position: relative; top: 3px;"><a href="#" class="site-menu-toggle js-menu-toggle text-black"><span class="icon-menu h3"></span></a></div>
+              </div>
+
+            </div>
+          </div>
+          
+        </header>
+    <div id="tipue_search_content">每周進度 << <a href='每周進度.html'>Previous</a> <br /><h1>Week17</h1>
 <p><strong>構建乾淨的模型教程</strong></p>
 <p><strong> </strong></p>
 <p>本教程將指導您逐步構建機器人或任何其他項目的清晰仿真模型。 為了具有美觀，快速顯示，快速仿真和穩定的仿真模型，這是一個非常重要的主題，也許是最重要的方面</p>
 <p>為了說明模型的構建過程，我們將構建以下操縱器：</p>
-<p><img alt="" height="260" src="/images/modelTut1.jpg" width="76"/></p>
+<p><img alt="" height="260" src="./../images/modelTut1.jpg" width="76"/></p>
 <p>                   </p>
 <p>建立可見的形狀</p>
 <p>在構建新模型時，首先，我們僅處理它的視覺方面：動態方面（其簡化，優化模型的不合理之處），關節，傳感器等將在以後階段進行處理。</p>
 <p>現在，我們可以使用<span>[</span>菜單欄<span>-&gt;</span>添加<span>-&gt;</span>基本形狀<span>-&gt; ...]</span>在<span>CoppeliaSim</span>中直接創建基本形狀。基本形狀將是簡單的網格，對於我們的應用程序，可能沒有足夠的細節或幾何精度。 在這種情況下，我們的另一個選擇是從外部應用程序導入網格。</p>
 <p>從外部應用程序導入<span>CAD</span>數據時，最重要的是確保<span>CAD</span>模型不會太重，即不包含太多三角形。因為重型模型的顯示速度會很慢，並且還會減慢以後可能使用的各種計算模塊。 以下示例通常是一事無成（即使我們會在後面看到，即使有方法可以簡化<span>CoppeliaSim</span>中的數據）：</p>
-<p><img alt="" height="323" src="/images/modelTut2.jpg" width="640"/></p>
+<p><img alt="" height="323" src="./../images/modelTut2.jpg" width="640"/></p>
 <p>上面的<span>CAD</span>數據非常重：它包含許多三角形（超過<span>47'000</span>個），如果我們只在空的場景中使用單個三角形的實例，這是可以的。通常，我們建議對不超過<span>2</span>萬個三角形的機器人進行建模，但是在大多數情況下，<span>5 000</span>至<span>10 000</span>個三角形也可以。</p>
 <p>在幾乎所有方面，少即是好。</p>
 <p>是什麼使上述模型如此重？包含孔和小細節的模型將需要更多的三角形面才能正確表示。因此，請嘗試從原始模型數據中刪除所有的孔，螺釘，物體的內部等。如果您將原始模型數據表示為參數化曲面<span>/</span>對象，則通常在大多數情況下只需選擇並刪除它們即可（例如在<span>Solidworks</span>中）。第二個重要步驟是以有限的精度導出原始數據：大多數<span>CAD</span>應用程序都允許您指定導出的網格的細節級別。當工程圖由大小對象組成時，分幾步導出對象可能也很重要。這是為了避免大對象定義太精確和小對象定義太粗：首先簡單地導出大對象（通過調整所需的精度設置），然後導出小對象。</p>
 <p>CoppeliaSim當前支持以下<span>CAD</span>數據格式：<span>OBJ</span>，<span>STL</span>，<span>DXF</span>，<span>3DS</span>（僅<span>Windows</span>）和<span>Collada</span>。 還支持<span>URDF</span>，但此處未提及，因為它不是基於純網格的文件格式。</p>
 <p>現在，假設我們已按照上一節中所述應用了所有可能的簡化。 導入後，我們可能最終仍然會留下一個過重的網格：</p>
-<p><img alt="" height="323" src="/images/modelTut3.jpg" width="657"/></p>
+<p><img alt="" height="323" src="./../images/modelTut3.jpg" width="657"/></p>
 <p>還要注意導入的網格的方向錯誤：最好保持其方向不變，直到構建整個模型為止，因為如果在以後的階段中我們要導入與同一機器人相關的其他項目，它們將 自動具有相對於原始網格的正確位置<span>/</span>方向。</p>
 <p>在此階段，我們可以使用多種功能來簡化網格：</p>
 <p>自動網格劃分：處理網格元素可以為我們提供更多的控制權。 可以通過<span>[</span>菜單欄<span>-&gt;</span>編輯<span>-&gt;</span>分組<span>/</span>合併<span>-&gt;</span>分割所選形狀<span>]</span>訪問該功能。 有時，網格劃分會超出預期。 在這種情況下，只需將邏輯上屬於一起的元素（即，具有相同的視覺屬性並且屬於同一鏈接的一部分）合併回一個單一形狀（<span>[</span>菜單欄<span>-&gt;</span>編輯<span>-&gt;</span>分組<span>/</span>合併<span>-&gt; </span>合併選定的形狀<span>]</span>）。</p>
@@ -39,34 +172,34 @@
 <p>抽取網格：減少網格中包含的三角形數量。 可以通過<span>[</span>菜單欄<span>-&gt;</span>編輯<span>-&gt;</span>縮小所選形狀<span>...]</span>訪問該功能。</p>
 <p>刪除網格的內部：允許通過刪除其內部來簡化網格。 此功能基於視覺傳感器，根據所選設置可能會或多或少地令人滿意。 可以通過<span>[</span>菜單欄<span>-&gt;</span>編輯<span>-&gt;</span>提取選定形狀的內部<span>]</span>訪問該功能。</p>
 <p>沒有<span>/</span>可以應用上述功能的預定義順序（列表中的第一項除外），它在很大程度上取決於我們要簡化的網格的幾何形狀。 下圖說明了應用於導入的網格的上述功能：</p>
-<p>          <img alt="" height="654" src="/images/modelTut4.jpg" width="400"/></p>
+<p>          <img alt="" height="654" src="./../images/modelTut4.jpg" width="400"/></p>
 <p>凸包在現階段如何對我們沒有幫助。 首先使用網格抽取功能，然後運行兩次該功能，以將三角形的數量總共除以<span>50</span>。完成後，我們提取簡化形狀的內部並將其丟棄。 我們最終得到的網格總共包含<span>2'660</span>個三角形。 形狀包含的三角形<span>/</span>頂點的數量可以在形狀幾何對話框中看到。 對於整個機器人模型，<span>2'660</span>三角形是極少的三角形，因此視覺外觀可能會因此受到影響。</p>
 <p>在這一階段，我們可以開始將機器人劃分為單獨的鏈接。您可以通過兩種不同的方式執行此操作：</p>
 <p>自動網格劃分：它將檢查形狀並為未通過公共邊鏈接在一起的所有元素生成新形狀。可以通過<span>[</span>菜單欄<span>-&gt;</span>編輯<span>-&gt;</span>分組<span>/</span>合併<span>-&gt;</span>分割所選形狀<span>]</span>訪問該功能。</p>
 <p>手動網格劃分：通過三角形編輯模式，可以手動選擇邏輯上不屬於邏輯的三角形，然後單擊“提取形狀”。這將在場景中生成新形狀。 完成該操作後，刪除選定的三角形。</p>
 <p>現在，我們可以進一步細化<span>/</span>簡化單個形狀。 有時，如果改用凸包，形狀可能會看起來更好。 有時，您將不得不反複使用上述幾種技術，以獲得所需的結果。 以以下網格為例：</p>
-<p>                    <img alt="" height="300" src="/images/modelTut6.jpg" width="151"/></p>
+<p>                    <img alt="" height="300" src="./../images/modelTut6.jpg" width="151"/></p>
 <p>上面形狀的問題是，由於其中包含孔，我們無法很好地簡化它。 因此，我們必須通過形狀編輯模式進行更複雜的處理，在該模式下，我們可以提取邏輯上屬於同一凸形子實體的單個元素。 此過程可能需要進行多次迭代：我們首先提取<span>3</span>個近似凸元素。我們忽略作為兩個孔的一部分的三角形。在形狀編輯模式下編輯形狀時，可以方便地切換可見性圖層，以查看其他場景項所覆蓋的內容。</p>
-<p><img alt="" height="303" src="/images/modelTut7.jpg" width="640"/></p>
+<p><img alt="" height="303" src="./../images/modelTut7.jpg" width="640"/></p>
 <p>我們最終得到三個形狀的總和，但是其中兩個將需要進一步改進。 現在我們可以擦除作為孔的一部分的三角形。 最後，我們分別提取<span>3</span>種形狀的凸包，然後將其與<span>[</span>菜單欄<span>-&gt;</span>編輯<span>-&gt;</span>分組<span>/</span>合併<span>-&gt;</span>合併所選形狀<span>]</span>合併在一起：</p>
-<p><img alt="" height="306" src="/images/modelTut8.jpg" width="640"/></p>
+<p><img alt="" height="306" src="./../images/modelTut8.jpg" width="640"/></p>
 <p>在<span>CoppeliaSim</span>中，我們可以啟用<span>/</span>禁用每種形狀的邊緣顯示。 我們還可以指定邊緣顯示時要考慮的角度。 相似的參數是陰影角，它指示形狀將在多方面顯示。 這些參數以及其他一些參數（例如形狀顏色）可以在形狀屬性中進行調整。形狀有多種風味。 到目前為止，在本教程中，我們僅處理簡單的形狀：簡單的形狀具有一組視覺屬性。如果合併兩個形狀，則結果將是一個簡單的形狀。 您還可以對形狀進行分組，在這種情況下，每個形狀將保留其視覺屬性。</p>
 <p>在下一步中，我們可以合併邏輯上屬於一起的元素（如果它們屬於同一剛性元素，並且具有相同的視覺屬性）。 然後，我們更改各種元素的視覺屬性。我們選擇所有具有相同視覺屬性的形狀，然後控制選擇已調整的形狀，然後單擊“應用於選擇”，一次是“顏色”，一次是其他屬性，在形狀屬性中：這將轉移所有 所選形狀的視覺屬性。 我們最終得到<span>17</span>個單獨的形狀：</p>
-<p>    <img alt="" height="229" src="/images/modelTut20.jpg" width="550"/></p>
+<p>    <img alt="" height="229" src="./../images/modelTut20.jpg" width="550"/></p>
 <p>現在，我們可以使用<span>[</span>菜單欄<span>-&gt;</span>編輯<span>-&gt;</span>分組<span>/</span>合併<span>-&gt;</span>分組所選形狀<span>]</span>對屬於同一鏈接的形狀進行分組。 我們最終得到<span>7</span>個形狀：機器人的基礎和<span>6</span>個移動鏈接。正確命名對像也很重要：可以通過雙擊場景層次結構中的對象名稱來做到這一點。 基礎應始終是機械手或模型名稱，其他對象應始終包含基礎對象名稱，例如：<span>robot</span>（基礎），<span>robot_link1</span>，<span>robot_proximitySensor</span>等。通過默認，形狀將分配給可見性層<span>1</span>，但可以 在對象通用屬性中進行更改。 默認情況下，僅激活場景的可見性層<span>1-8</span>。 現在，我們有了以下內容（模型<span>ResizableFloor_5_25</span>模型在模型屬性對話框中暫時不可見）：</p>
-<p><img alt="" height="519" src="/images/modelTut10.jpg" width="656"/></p>
+<p><img alt="" height="519" src="./../images/modelTut10.jpg" width="656"/></p>
 <p>創建或修改形狀時，<span>CoppeliaSim</span>將自動設置其參考框架的位置和方向。 形狀的參考框架將始終位於形狀的幾何中心。 將選擇框架方向，以便形狀的邊界框保持盡可能小。我們隨時可以隨時調整形狀的參考框架的方向。</p>
 <p> </p>
 <p>            建立關節</p>
 <p> </p>
 <p>現在，我們將照顧關節<span>/</span>馬達。大多數時候，我們知道每個關節的確切位置和方向。在這種情況下，我們只需使用<span>[</span>菜單欄<span>-&gt;</span>添加<span>-&gt;</span>關節<span>-&gt; ...]</span>添加關節，然後可以使用位置對話框和方向對話框更改它們的位置和方向。其他情況下，我們只有<span>Denavit-Hartenberg</span>（即<span>D-H</span>）參數。在這種情況下，我們可以通過模型瀏覽器中位於<span>Models / tools / Denavit-Hartenberg</span>聯合<span>creator.ttm</span>中的工具模型來構建關節。有時，我們沒有關於關節位置和方向的信息。然後，我們需要從導入的網格中提取它們。讓我們假設這是我們的情況，而是打開一個新場景，然後再次導入原始<span>CAD</span>數據。大多數時候，我們可以從原始網格中提取網格或基本形狀。第一步是細分原始網格。如果那不起作用，我們將通過三角形編輯模式進行操作。假設我們可以劃分原始網格。現在，我們可以檢查較小的對象。我們正在尋找旋轉形狀，可以用作在其位置以相同方向創建關節的參考。刪除所有不需要的對象。有時在多個打開的場景中工作也很有用，以便於可視化。我們關注機器人的基座：它包含一個圓柱體，該圓柱體的第一個關節的位置正確。在三角形編輯模式下，我們有：</p>
-<p>      <img alt="" height="367" src="/images/modelTut11.jpg" width="450"/></p>
+<p>      <img alt="" height="367" src="./../images/modelTut11.jpg" width="450"/></p>
 <p>我們通過頁面選擇器工具欄按鈕更改相機視圖，以便從側面查看對象。然後，我們切換到頂點編輯模式，並選擇屬於上光盤的所有頂點。通過打開<span>/</span>關閉某些層，我們可以隱藏場景中的其他對象。 然後我們切換回三角形編輯模式：</p>
-<p><img alt="" height="370" src="/images/modelTut12.jpg" width="600"/></p>
+<p><img alt="" height="370" src="./../images/modelTut12.jpg" width="600"/></p>
 <p>現在，我們單擊“提取圓柱體”（在這種情況下，“提取形狀”也將起作用），這只是根據選定的三角形在場景中創建了圓柱體形狀。我們離開編輯模式並放棄更改。現在，通過<span>[</span>菜單欄<span>-&gt;</span>添加<span>-&gt;</span>關節<span>-&gt;</span>旋轉<span>]</span>添加旋轉關節，使其保持選中狀態，然後控制選擇提取的圓柱形狀。在位置對話框的“位置”選項卡上，單擊“應用於選擇”：這基本上將圓柱體的<span>x / y / z</span>位置複製到關節。現在兩個位置都相同。在方向對話框中的方向選項卡上，我們還單擊“應用於選擇”：所選對象的方向現在也相同。如果需要，我們可以在該對話框的“旋轉”選項卡上執行此操作。同樣，我們也可以沿關節的軸移動關節，甚至進行更複雜的操作。這就是我們所擁有的：</p>
-<p>    <img alt="" height="406" src="/images/modelTut13.jpg" width="400"/></p>
+<p>    <img alt="" height="406" src="./../images/modelTut13.jpg" width="400"/></p>
 <p>現在，我們將關節複製回到原始場景中，並保存它。 我們對機器人中的所有關節重複上述過程，然後重命名它們。 我們還將使所有關節的關節屬性稍長一些，以便查看所有關節。 通過默認，關節將分配給可見性層<span>2</span>，但可以在對象公共屬性中對其進行更改。 現在，我們將所有關節分配給可見性層<span>10</span>，然後為場景臨時啟用可見性層<span>10</span>，以使這些關節也可視化（默認情況下，僅激活場景的可見性層<span>1-8</span>）。 這就是我們所擁有的（模型<span>ResizableFloor_5_25</span>模型在模型屬性對話框中暫時不可見）：</p>
-<p><img alt="" height="519" src="/images/modelTut14.jpg" width="656"/></p>
+<p><img alt="" height="519" src="./../images/modelTut14.jpg" width="656"/></p>
 <p>至此，我們可以開始構建模型層次結構並完成模型定義。 但是，如果我們希望動態啟用<span>opur</span>機器人，則還有一個額外的中間步驟：</p>
 <p> </p>
 <p>         建立動態形狀</p>
@@ -83,7 +216,7 @@
 <p>因此，優先順序為：純形狀，純複合形狀，凸形，複合凸形，最後是隨機形狀。 對於要構建的機器人，我們將其基座設為純圓柱體，將其他鏈接設為凸形或凸形分解形狀。</p>
 <p>我們也可以將動態啟用的形狀用作機器人的可見部分，但是看起來不夠好。 因此，我們將為在本教程第一部分中創建每個可見形狀構建一個動態的副本：隱藏部分將代表動態模型，並由物理引擎專用，可見部分將用於可視化，接近傳感器檢測等。</p>
 <p>我們選擇對像機器人，將其複制並粘貼到新場景中（以保持原始模型不變），然後啟動三角形編輯模式。 如果對像機器人是複合形狀，我們首先必須將其取消組合，然後合併各個形狀。現在，我們選擇代表電源線的幾個三角形，並將其刪除。然後，選擇該形狀中的所有三角形，然後單擊“提取圓柱體”。現在我們可以離開編輯模式，我們的基礎對象表示為純圓柱體：</p>
-<p><img alt="" height="275" src="/images/modelTut15.jpg" width="640"/></p>
+<p><img alt="" height="275" src="./../images/modelTut15.jpg" width="640"/></p>
 <p>我們將新形狀重命名為<span>robot_dyn</span>，將其分配給可見性層<span>9</span>，然後將其複製到原始場景。 其餘鏈接將建模為凸形或複合凸形。 現在，我們選擇第一個移動鏈接（即對象<span>robot_link1</span>），並使用<span>[</span>菜單欄<span>-&gt;</span>添加<span>-&gt;</span>選擇的凸包<span>]</span>從中生成凸形。 我們將其重命名為<span>robot_link_dyn1</span>並將其分配給可見性層<span>9</span>。當提取凸包並沒有保留足夠的原始形狀細節時，然後將所有凸包與<span> [</span>菜單欄<span>-&gt;</span>編輯<span>-&gt;</span>分組<span>/</span>合併<span>-&gt;</span>對選定形狀進行分組<span>]</span>。 如果這似乎有問題或很耗時，則可以使用<span>[</span>菜單欄<span>-&gt;</span>添加<span>-&gt;</span>選擇的凸分解<span>...]</span>自動提取凸分解的形狀：</p>
 <p>   </p>
 <p>   </p>
@@ -107,4 +240,46 @@
 <p>    </p>
 <p>抓具知道如何附加自身，因為它在模型定義期間進行了適當的配置。我們選擇機器人模型，然後在對象公共屬性中單擊“組裝”。 為“父項”匹配值設置一個空字符串，然後單擊“設置矩陣”。 這將記住當前基礎對象的局部轉換矩陣，並使用它相對於移動機器人的附著點定位<span>/</span>定向。 為了驗證我們做的正確，我們將模型<span>Models / robots / mobile / KUKA Omnirob.ttm</span>拖到場景中。 然後，我們選擇機器人模型，然後在移動平台上按住<span>Control</span>鍵並單擊其中一個附接點，然後單擊“組裝<span>/</span>拆卸”工具欄按鈕。 我們的機器人應該正確地將自己放置在移動機器人的頂部：</p>
 <p>      </p>
-<p>現在，我們可以向機器人添加其他項目，例如傳感器。 在某些時候，我們可能還希望將嵌入式腳本附加到我們的模型中，以便控制其行為或出於各種目的對其進行配置。 在這種情況下，請確保了解如何從嵌入式腳本訪問對象句柄。</p>
+<p>現在，我們可以向機器人添加其他項目，例如傳感器。 在某些時候，我們可能還希望將嵌入式腳本附加到我們的模型中，以便控制其行為或出於各種目的對其進行配置。 在這種情況下，請確保了解如何從嵌入式腳本訪問對象句柄。</p><br />每周進度 << <a href='每周進度.html'>Previous</a> </div>
+        
+    <!-- footer -->
+      <div class="container">
+        <div class="row pt-3 mx-auto">
+            <p>
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a>
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            </p>
+        </div>
+      </div>
+    <!-- for footer -->
+    
+        </div> <!-- for site wrap -->
+            <!-- <script src="../cmsimde/static/chimper/js/jquery-3.3.1.min.js"></script> -->
+            <script src="../cmsimde/static/chimper/js/jquery-migrate-3.0.1.min.js"></script>
+            <script src="../cmsimde/static/chimper/js/jquery-ui.js"></script>
+            <script src="../cmsimde/static/chimper/js/popper.min.js"></script>
+            <script src="../cmsimde/static/chimper/js/bootstrap.min.js"></script>
+            <script src="../cmsimde/static/chimper/js/owl.carousel.min.js"></script>
+            <script src="../cmsimde/static/chimper/js/jquery.stellar.min.js"></script>
+            <script src="../cmsimde/static/chimper/js/jquery.countdown.min.js"></script>
+            <script src="../cmsimde/static/chimper/js/jquery.magnific-popup.min.js"></script>
+            <script src="../cmsimde/static/chimper/js/bootstrap-datepicker.min.js"></script>
+            <script src="../cmsimde/static/chimper/js/aos.js"></script>
+            <!--
+            <script src="../cmsimde/static/chimper/js/typed.js"></script>
+                    <script>
+                    var typed = new Typed('.typed-words', {
+                    strings: ["Web Apps"," WordPress"," Mobile Apps"],
+                    typeSpeed: 80,
+                    backSpeed: 80,
+                    backDelay: 4000,
+                    startDelay: 1000,
+                    loop: true,
+                    showCursor: true
+                    });
+                    </script>
+            -->
+            <script src="../cmsimde/static/chimper/js/main.js"></script>
+        </body></html>
+        
