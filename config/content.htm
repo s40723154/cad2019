@@ -174,6 +174,38 @@
 <p>現在，我們可以向機器人添加其他項目，例如傳感器。 在某些時候，我們可能還希望將嵌入式腳本附加到我們的模型中，以便控制其行為或出於各種目的對其進行配置。 在這種情況下，請確保了解如何從嵌入式腳本訪問對象句柄。</p>
 <p>Now we could add additional items to our robot, such as sensors for instance. At some point we might also want to attach<span> </span><a href="http://www.coppeliarobotics.com/helpFiles/en/scripts.htm">embedded scripts</a><span> </span>to our model, in order to control its behaviour or configure it for various purposes. In that case, make sure to understand<span> </span><a href="http://www.coppeliarobotics.com/helpFiles/en/accessingGeneralObjects.htm">how object handles are accessed from embedded scripts</a>. We can also control/access/interface our model from a<span> </span><a href="http://www.coppeliarobotics.com/helpFiles/en/plugins.htm">plugin</a>, from a<span> </span><a href="http://www.coppeliarobotics.com/helpFiles/en/remoteApiOverview.htm">remote API</a><span> </span>client, from a<span> </span><a href="http://www.coppeliarobotics.com/helpFiles/en/rosInterfaces.htm">ROS</a><span> </span>node, from a<span> </span><a href="http://www.coppeliarobotics.com/helpFiles/en/blueZeroPlugin.htm">BlueZero</a><span> </span>node, or from an<span> </span><a href="http://www.coppeliarobotics.com/helpFiles/en/addOns.htm">add-on</a>.</p>
 <p>Now we make sure we have reverted the changes done during robot and gripper attachment, we collapse the hierarchy tree of our robot model, select the base of our model, then save it with [Menu bar --&gt; File --&gt; Save model as...]. If we saved it in the<span> </span><em>model</em><span> </span>folder, then the model will be available in the<span> </span><a href="http://www.coppeliarobotics.com/helpFiles/en/userInterface.htm#ModelBrowser">model brower</a>.</p>
+<h1>Solvespace編譯</h1>
+<h4>Solvespace 編譯</h4>
+<p>先將 Y:\portablegit\bin\sh.exe 改名為 sh_rename_for_solvespace.exe</p>
+<p>re sh.exe sh_rename_for_solvespace.exe</p>
+<p><span>re 是重新命名的指令</span></p>
+<p><span>git version 檢查 git 版本 ( 需要git 版本為2.13 以上 )</span></p>
+<p><span>git clone --recurse-submodules https://github.com/solvespace/solvespace.git solvespace</span></p>
+<p>*p.s. <span>使用  git clone </span><span>--recurse-submodules 取得所有子模組資料，clone 前請先確認</span></p>
+<p><span>是否有重複檔名的資料，並耐心等候，以確保檔案完整性</span></p>
+<p>上述指令同:</p>
+<p>git clone <span><a href="https://github.com/solvespace/solvespace.git">https://github.com/solvespace/solvespace.git</a> </span></p>
+<p><span>cd solvespace</span></p>
+<p><span>git submodule init</span></p>
+<p><span>git submodule update</span></p>
+<p><span>編輯 Y:\tmp\solvespace\extlib\angle\CMakeLists.txt 將 713 行和 714行註解掉，像底下這樣</span></p>
+<p><span>#list(APPEND ANGLE_DEFINITIONS<br/><span>#"-DANGLE_PRELOADED_D3DCOMPILER_MODULE_NAMES={ \"d3dcompiler_47.dll\", \"d3dcompiler_46.dll\", \"d3dcompiler_43.dll\" }")</span><br/><span>endif()</span></span></p>
+<p>*p.s.  漏掉此步驟，否則後續編譯會有錯誤</p>
+<p>到 <span>Y:\tmp\solvespace\extlib\libpng 目錄底下新建名為 build目錄</span></p>
+<p>cd solvespace </p>
+<p>cd extlib</p>
+<p>cd libpng</p>
+<p>mkdir build</p>
+<p>cd build</p>
+<p>cmake .. -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release</p>
+<p>mingw32-make</p>
+<p><span><span>重新命名 Y:\tmp\solvespace\extlib\libpng\build\libpng.dll.a 改名為 libpng_static.a 並且複製到 Y:\msys64\mingw64\lib</span></span></p>
+<p><span><span>回到 Y:\tmp\solvespace 目錄下新建名為 build目錄</span></span></p>
+<p>mkdir build</p>
+<p>cd build</p>
+<p>cmake .. -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release</p>
+<p>mingw32-make</p>
+<p>完成以上編譯後執行 <span>Y:</span>tmp\solvespace\build\bin\solvespace.exe   ，若能成功執行就能確定完成 Solvespace 編譯</p>
 <h1>Solvespace</h1>
 <h2>影片</h2>
 <p><a href="https://www.youtube.com/watch?v=AoUwbbOuA_0">https://www.youtube.com/watch?v=AoUwbbOuA_0</a></p>
